@@ -36,10 +36,11 @@ Docelowo spięta z backendem/adminem na wzór infrastruktury new-pawnshop (leady
 - [ ] Weryfikacja wizualna panel-tilt + finalny mobile pass na realnym urządzeniu (pane renderer ogranicza zrzuty)
 - [ ] A11y: pełny audit prefers-reduced-motion / focus-visible
 
-## ⬜ Faza 4 — Publikacja
+## 🔶 Faza 4 — Publikacja
 
 - [ ] Remote na GitHubie
-- [ ] Deploy na Vercel (Hobby) + ewentualna domena kokki.pl (przepięcie DNS po akceptacji znajomego)
+- [x] Deploy na Vercel (Hobby) — produkcja: https://kokki-six.vercel.app (projekt `kokki`, scope `ms-projects-44d04358`)
+- [ ] Domena kokki.pl (przepięcie DNS po akceptacji znajomego)
 - [ ] Lighthouse pass (LCP z wideo hero!), analityka, cookie banner (privacy-first)
 
 ## ⬜ Faza 5 — Backend + Admin (fork new-pawnshop)
@@ -58,4 +59,4 @@ Docelowo spięta z backendem/adminem na wzór infrastruktury new-pawnshop (leady
 
 ---
 
-**Stan na 2026-07-20:** Fazy 0–3 zakończone (poza dwoma punktami QA). Następny krok: **Faza 4 — GitHub + Vercel**. Strona działa lokalnie: `npm run dev -- -p 3005`.
+**Stan na 2026-07-20:** Fazy 0–3 zakończone (poza dwoma punktami QA). **Strona jest live: https://kokki-six.vercel.app** (deploy przez `vercel deploy --prod`). Zostało z Fazy 4: remote na GitHubie, domena, Lighthouse. Lokalnie: `npm run dev -- -p 3005`.
