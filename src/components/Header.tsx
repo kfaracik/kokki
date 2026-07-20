@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Logo from "./Logo";
 
 function magnetize(el: HTMLElement) {
   const move = (e: MouseEvent) => {
@@ -37,8 +38,7 @@ export default function Header() {
     <header className="site-header">
       <div className="wrap nav-inner">
         <a href="#top" className="logo" aria-label="Kokki — strona główna">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/brand/logo.svg" alt="Kokki" />
+          <Logo />
         </a>
         <nav className="menu">
           <a href="#technologia">Technologia</a>

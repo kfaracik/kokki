@@ -5,6 +5,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { FAQ, PRODUCTS, TICKER_ITEMS } from "@/lib/data";
 import { useMagnetic } from "./Header";
+import Logo from "./Logo";
 
 export function Ticker() {
   const trackRef = useRef<HTMLDivElement>(null);
@@ -452,12 +453,25 @@ export function Contact() {
 }
 
 export function Footer() {
+  const logoRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (window.matchMedia("(hover: hover)").matches) return;
+    const group = logoRef.current?.querySelector(".o-group");
+    if (!logoRef.current || !group) return;
+    const io = new IntersectionObserver(
+      ([entry]) => group.classList.toggle("lit", entry.isIntersecting),
+      { threshold: 0.4 },
+    );
+    io.observe(logoRef.current);
+    return () => io.disconnect();
+  }, []);
+
   return (
     <footer className="foot">
       <div className="wrap">
-        <div className="foot-logo" data-cursor>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/brand/logo.svg" alt="" aria-hidden />
+        <div className="foot-logo" data-cursor ref={logoRef}>
+          <Logo burner />
         </div>
         <div className="foot-grid">
           <div>

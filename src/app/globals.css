@@ -11,6 +11,10 @@
   --accent-2: #f59a3c;
   --copper: #b87333;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  /* sharp radius scale — echoes the glass slab of the Kokki control panel */
+  --r-s: 4px;
+  --r-m: 10px;
+  --r-l: 14px;
 }
 
 * {
@@ -194,10 +198,21 @@ a {
   align-items: center;
   justify-content: space-between;
 }
-.logo img {
+.logo svg {
   height: 26px;
   width: auto;
   display: block;
+  fill: var(--ink);
+  overflow: visible;
+}
+.logo-o {
+  transition:
+    fill 0.4s var(--ease),
+    filter 0.4s var(--ease);
+}
+.logo:hover .logo-o {
+  fill: var(--accent);
+  filter: drop-shadow(0 0 10px rgba(232, 98, 42, 0.7));
 }
 nav.menu {
   display: flex;
@@ -233,13 +248,13 @@ nav.menu a:hover::after {
 .cta {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   font-family: var(--font-outfit), sans-serif;
   font-size: 0.78rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  padding: 13px 26px;
-  border-radius: 100px;
+  padding: 14px 28px;
+  border-radius: var(--r-s);
   border: 1px solid var(--line);
   color: var(--ink);
   background: transparent;
@@ -278,11 +293,15 @@ nav.menu a:hover::after {
   color: var(--bg);
 }
 .cta .dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
+  width: 7px;
+  height: 7px;
   background: currentColor;
   flex-shrink: 0;
+  transform: rotate(45deg);
+  transition: transform 0.5s var(--ease);
+}
+.cta:hover .dot {
+  transform: rotate(225deg);
 }
 
 /* ---------- hero ---------- */
@@ -586,7 +605,7 @@ section.pad {
 }
 .invisible-photo {
   position: relative;
-  border-radius: 18px;
+  border-radius: var(--r-m);
   overflow: hidden;
   aspect-ratio: 4 / 3.4;
   border: 1px solid var(--line);
@@ -660,7 +679,7 @@ section.pad {
 /* ---------- panel showcase ---------- */
 .panel-stage {
   position: relative;
-  border-radius: 22px;
+  border-radius: var(--r-l);
   border: 1px solid var(--line);
   background:
     radial-gradient(90% 120% at 50% 0%, rgba(232, 98, 42, 0.07), transparent 55%),
@@ -677,7 +696,7 @@ section.pad {
   width: 100%;
   height: auto;
   display: block;
-  border-radius: 12px;
+  border-radius: 6px;
   box-shadow: 0 60px 120px rgba(0, 0, 0, 0.6);
   will-change: transform;
   transition: transform 0.2s ease-out;
@@ -711,7 +730,7 @@ section.pad {
   color: var(--muted);
   border: 1px solid var(--line);
   padding: 10px 18px;
-  border-radius: 100px;
+  border-radius: var(--r-s);
   transition:
     color 0.35s var(--ease),
     border-color 0.35s var(--ease);
@@ -729,7 +748,7 @@ section.pad {
 }
 .card {
   border: 1px solid var(--line);
-  border-radius: 18px;
+  border-radius: var(--r-m);
   position: relative;
   background: linear-gradient(180deg, var(--bg-2), var(--bg));
   overflow: hidden;
@@ -983,16 +1002,68 @@ section.pad {
 .foot-logo {
   width: 100%;
   margin-bottom: 60px;
-  opacity: 0.14;
+  opacity: 0.16;
   transition: opacity 0.6s var(--ease);
+  padding: 60px 0 30px;
 }
 .foot-logo:hover {
-  opacity: 0.4;
+  opacity: 0.55;
 }
-.foot-logo img {
+.foot-logo svg {
   width: 100%;
   height: auto;
   display: block;
+  fill: var(--ink);
+  overflow: visible;
+}
+/* induction burner ignite on the logo "O" */
+.o-group .logo-o {
+  transition:
+    fill 0.45s var(--ease),
+    filter 0.45s var(--ease);
+}
+.o-group .ring {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1.6;
+  opacity: 0;
+  pointer-events: none;
+  transform-origin: 119.87px 37.73px;
+  transform: scale(0.68);
+  transition:
+    opacity 0.5s var(--ease),
+    transform 0.65s var(--ease);
+}
+.o-group:hover .logo-o,
+.o-group.lit .logo-o {
+  fill: var(--accent);
+}
+.o-glow {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.6s var(--ease);
+}
+.o-group:hover .o-glow,
+.o-group.lit .o-glow {
+  opacity: 1;
+  animation: heat-flicker 2.4s infinite ease-in-out;
+}
+.o-group:hover .r1,
+.o-group.lit .r1 {
+  opacity: 0.85;
+  transform: scale(1);
+}
+.o-group:hover .r2,
+.o-group.lit .r2 {
+  opacity: 0.5;
+  transform: scale(1);
+  transition-delay: 0.09s;
+}
+.o-group:hover .r3,
+.o-group.lit .r3 {
+  opacity: 0.25;
+  transform: scale(1);
+  transition-delay: 0.18s;
 }
 .foot-grid {
   display: flex;
