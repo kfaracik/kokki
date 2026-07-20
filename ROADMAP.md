@@ -40,7 +40,7 @@ Docelowo spięta z backendem/adminem na wzór infrastruktury new-pawnshop (leady
 
 - [x] Remote na GitHubie — https://github.com/kfaracik/kokki (private)
 - [x] Deploy na Vercel (Hobby) — produkcja: https://kokki-six.vercel.app (projekt `kokki`, scope `ms-projects-44d04358`)
-- [ ] Auto-deploy z GitHuba (wymaga autoryzacji Vercel GitHub App dla repo `kokki`; do czasu podpięcia deploy ręczny: `vercel deploy --prod`)
+- [x] Auto-deploy z GitHuba — repo podpięte, push na `main` = deploy produkcji
 - [ ] Domena kokki.pl (przepięcie DNS po akceptacji znajomego)
 - [ ] Lighthouse pass (LCP z wideo hero!), analityka, cookie banner (privacy-first)
 
