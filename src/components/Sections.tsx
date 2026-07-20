@@ -341,6 +341,112 @@ export function Products() {
   );
 }
 
+const COLLAB_CARDS = [
+  {
+    title: "Architekci i projektanci wnętrz",
+    body: "Czysty blat bez płyty otwiera nowe możliwości projektowe. Wspieramy Cię na etapie koncepcji — od rozmieszczenia modułów po detale frezowania.",
+  },
+  {
+    title: "Firmy kamieniarskie",
+    body: "Montaż pod spiekiem 12 mm, granitem i kwarcytem. Dostarczamy specyfikację techniczną i wsparcie przy przygotowaniu blatu.",
+  },
+  {
+    title: "Studia kuchenne",
+    body: "Wyróżnij swoją ofertę produktem, którego nie ma nikt inny. Materiały ekspozycyjne, szkolenia i indywidualne warunki współpracy.",
+  },
+];
+
+export function Collab() {
+  const photoRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        photoRef.current?.querySelector("img") ?? null,
+        { yPercent: -8, scale: 1.12 },
+        {
+          yPercent: 8,
+          scale: 1.12,
+          ease: "none",
+          scrollTrigger: {
+            trigger: photoRef.current,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: true,
+          },
+        },
+      );
+    });
+    return () => ctx.revert();
+  }, []);
+
+  return (
+    <section className="pad" id="wspolpraca" style={{ background: "var(--bg-2)" }}>
+      <div className="wrap">
+        <div className="collab-grid">
+          <div>
+            <Reveal>
+              <p className="eyebrow">Współpraca</p>
+              <h2 style={{ fontSize: "clamp(2rem, 3.4vw, 3.2rem)", margin: "18px 0" }}>
+                Dla profesjonalistów,
+                <br />
+                którzy projektują kuchnie
+              </h2>
+              <p style={{ color: "var(--muted)", lineHeight: 1.75, maxWidth: "52ch" }}>
+                W Kokki cenimy kreatywność i innowacyjność, które niosą ze sobą
+                profesjonaliści z branży architektonicznej i kamieniarskiej.
+                Wspieramy projektantów wnętrz, architektów oraz firmy
+                kamieniarskie w tworzeniu przestrzeni, w których technologia
+                znika, a zostaje design.
+              </p>
+            </Reveal>
+            <div className="collab-cards">
+              {COLLAB_CARDS.map((c) => (
+                <Reveal key={c.title}>
+                  <div className="collab-card" data-cursor>
+                    <span className="diamond" />
+                    <h3>{c.title}</h3>
+                    <p>{c.body}</p>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+          <Reveal>
+            <div className="collab-photo" ref={photoRef}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/brand/teapot.png" alt="Czajnik parzący herbatę na kamiennym blacie z ukrytą indukcją Kokki" />
+            </div>
+          </Reveal>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export function About() {
+  return (
+    <section className="pad about" id="o-nas">
+      <div className="wrap">
+        <Reveal>
+          <p className="eyebrow">O nas</p>
+          <blockquote className="about-quote">
+            Powstaliśmy z połączenia pasji do nowoczesnych technologii
+            i&nbsp;miłości do <span className="accent">estetycznych, funkcjonalnych
+            przestrzeni</span>. Tego produktu brakowało na rynku — więc go
+            stworzyliśmy.
+          </blockquote>
+          <p className="about-sub">
+            Zespół profesjonalistów specjalizujących się w architekturze wnętrz
+            i elektronice użytkowej · Poznań
+          </p>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
 export function Faq() {
   const [open, setOpen] = useState<string | null>(null);
   const refs = useRef<Record<string, HTMLDivElement | null>>({});
@@ -487,6 +593,8 @@ export function Footer() {
             <a href="#technologia">Technologia</a>
             <a href="#panel">Sterowanie</a>
             <a href="#oferta">Oferta</a>
+            <a href="#wspolpraca">Współpraca</a>
+            <a href="#o-nas">O nas</a>
             <a href="#faq">FAQ</a>
             <a href="#kontakt">Kontakt</a>
           </div>

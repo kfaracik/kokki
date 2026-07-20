@@ -26,14 +26,15 @@ Docelowo spięta z backendem/adminem na wzór infrastruktury new-pawnshop (leady
 - [x] Smaczek-flagowiec: **"O" w logo footera zapala się jak palnik** (pierścienie zwojów + żar) na hover
 - [x] Dane produktów/FAQ w typowanym `src/lib/data.ts` — kształt przyszłego dokumentu Mongo
 
-## 🔶 Faza 3 — Szlif wizualny (w toku / następne)
+## ✅ Faza 3 — Szlif wizualny
 
-- [ ] Kompresja `public/brand/hero.mp4` (28 MB → ~4 MB; wymaga ffmpeg: `brew install ffmpeg`)
-- [ ] Mobile QA (menu mobilne — hamburger, sekcja Ignite na touch, wysokości 100svh)
-- [ ] Weryfikacja wizualna panel-tilt (pane renderer nie pozwolił na screenshot)
-- [ ] Sekcje: Współpraca (B2B/architekci) i O nas
-- [ ] Mikro-dopracowania: preloader → inline Logo z zapłonem O, easing sceny Ignite, a11y (focus-visible, prefers-reduced-motion pełne)
-- [ ] Favicon/OG image z logo, meta SEO, sitemap
+- [x] Kompresja `public/brand/hero.mp4` — 28 MB → **1,3 MB** (ffmpeg, 1600 px / CRF 30 / faststart)
+- [x] Menu mobilne: hamburger + pełnoekranowy overlay (numerowane linki, stagger, blokada scrolla); scroll-cue ukryty na mobile
+- [x] Sekcje **Współpraca** (3 grupy odbiorców + foto z parallaxem) i **O nas** (manifest typograficzny) — autentyczne copy z kokki.pl
+- [x] Preloader → inline Logo z zapłonem „O" podczas ładowania
+- [x] Favicon (palnik: pomarańczowa tarcza + pierścień na czerni) + meta OG (hero-on.png)
+- [ ] Weryfikacja wizualna panel-tilt + finalny mobile pass na realnym urządzeniu (pane renderer ogranicza zrzuty)
+- [ ] A11y: pełny audit prefers-reduced-motion / focus-visible
 
 ## ⬜ Faza 4 — Publikacja
 
@@ -57,4 +58,4 @@ Docelowo spięta z backendem/adminem na wzór infrastruktury new-pawnshop (leady
 
 ---
 
-**Stan na 2026-07-19:** Fazy 0–2 zakończone. Strona działa lokalnie: `npm run dev -- -p 3005`.
+**Stan na 2026-07-20:** Fazy 0–3 zakończone (poza dwoma punktami QA). Następny krok: **Faza 4 — GitHub + Vercel**. Strona działa lokalnie: `npm run dev -- -p 3005`.

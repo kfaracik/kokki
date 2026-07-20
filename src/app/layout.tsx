@@ -17,7 +17,15 @@ const lato = Lato({
 export const metadata: Metadata = {
   title: "Kokki — podblatowe kuchenki indukcyjne",
   description:
-    "Odkryj nowy wymiar gotowania. Podblatowe kuchenki indukcyjne Kokki — ukryta innowacja w Twojej kuchni.",
+    "Odkryj nowy wymiar gotowania. Podblatowe kuchenki indukcyjne Kokki — ukryta innowacja w Twojej kuchni. Montaż pod spiekiem, granitem i kwarcytem.",
+  openGraph: {
+    title: "Kokki — podblatowe kuchenki indukcyjne",
+    description:
+      "Indukcja, która znika pod blatem. Minimalizm i elegancja połączone z niezrównaną funkcjonalnością.",
+    locale: "pl_PL",
+    type: "website",
+    images: [{ url: "/brand/hero-on.png", width: 1920, height: 900 }],
+  },
 };
 
 export default function RootLayout({

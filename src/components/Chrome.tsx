@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
+import Logo from "./Logo";
 
 export default function Chrome() {
   const dotRef = useRef<HTMLDivElement>(null);
@@ -93,10 +94,12 @@ export default function Chrome() {
     const pre = preloaderRef.current;
     const preTl = gsap.timeline();
     if (pre) {
-      const logo = pre.querySelector("img");
+      const logo = pre.querySelector("svg");
+      const oGroup = pre.querySelector(".o-group");
       preTl
         .to(logo, { opacity: 1, duration: 0.55, ease: "power2.out", delay: 0.1 })
-        .to(logo, { opacity: 1, duration: 0.35 })
+        .add(() => oGroup?.classList.add("lit"), "+=0.15")
+        .to(logo, { opacity: 1, duration: 0.55 })
         .to(logo, { opacity: 0, y: -16, duration: 0.4, ease: "power2.in" })
         .to(pre, {
           yPercent: -100,
@@ -121,8 +124,7 @@ export default function Chrome() {
   return (
     <>
       <div className="preloader" ref={preloaderRef}>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/brand/logo.svg" alt="Kokki" />
+        <Logo burner />
       </div>
       <div className="progress" ref={progressRef} />
       <div className="grain" />

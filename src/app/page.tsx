@@ -2,6 +2,8 @@ import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import Ignite from "@/components/Ignite";
 import {
+  About,
+  Collab,
   Contact,
   Faq,
   Footer,
@@ -22,6 +24,8 @@ export default function Home() {
         <Invisible />
         <Panel />
         <Products />
+        <Collab />
+        <About />
         <Faq />
         <Contact />
       </main>

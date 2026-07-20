@@ -7,6 +7,8 @@ const K_LEFT =
 const O_DISC =
   "M119.87,59.87c-12.21,0-22.14-9.93-22.14-22.14s9.93-22.14,22.14-22.14,22.15,9.93,22.15,22.14-9.94,22.14-22.15,22.14Z";
 
+import { useId } from "react";
+
 export default function Logo({
   burner = false,
   className,
@@ -14,6 +16,7 @@ export default function Logo({
   burner?: boolean;
   className?: string;
 }) {
+  const gradId = useId();
   return (
     <svg
       viewBox="0 0 352.38 68.21"
@@ -30,7 +33,7 @@ export default function Logo({
       {burner ? (
         <>
           <defs>
-            <radialGradient id="o-glow-grad">
+            <radialGradient id={gradId}>
               <stop offset="0%" stopColor="#f59a3c" stopOpacity="0.65" />
               <stop offset="45%" stopColor="#e8622a" stopOpacity="0.3" />
               <stop offset="100%" stopColor="#e8622a" stopOpacity="0" />
@@ -42,7 +45,7 @@ export default function Logo({
               cx="119.87"
               cy="37.73"
               r="62"
-              fill="url(#o-glow-grad)"
+              fill={`url(#${gradId})`}
             />
             <circle className="ring r3" cx="119.87" cy="37.73" r="52" />
             <circle className="ring r2" cx="119.87" cy="37.73" r="41" />
