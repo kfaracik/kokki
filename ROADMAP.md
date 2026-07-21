@@ -40,7 +40,8 @@ Docelowo spięta z backendem/adminem na wzór infrastruktury new-pawnshop (leady
 
 - [x] Remote na GitHubie — https://github.com/kfaracik/kokki (private)
 - [x] Deploy na Vercel (Hobby) — produkcja: https://kokki-six.vercel.app (projekt `kokki`, scope `ms-projects-44d04358`)
-- [x] Auto-deploy z GitHuba — repo podpięte, push na `main` = deploy produkcji
+- [x] Auto-deploy z GitHuba — repo podpięte, push na `main` = deploy produkcji (zweryfikowany)
+- [x] Optymalizacja grafik — Współpraca dostała ostry kadr 1632px z renderu kuchni (zamiast rozciąganego 692px czajnika); pary pot/chef + poster hero jako JPEG, dedykowane miniatury kart, OG 1200×630; waga obrazów strony ~11 MB → ~1 MB (QA wizualne na produkcji w realnym Chrome)
 - [ ] Domena kokki.pl (przepięcie DNS po akceptacji znajomego)
 - [ ] Lighthouse pass (LCP z wideo hero!), analityka, cookie banner (privacy-first)
 
