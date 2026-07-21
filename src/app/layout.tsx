@@ -15,6 +15,7 @@ const lato = Lato({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://kokki-six.vercel.app"),
   title: "Kokki — podblatowe kuchenki indukcyjne",
   description:
     "Odkryj nowy wymiar gotowania. Podblatowe kuchenki indukcyjne Kokki — ukryta innowacja w Twojej kuchni. Montaż pod spiekiem, granitem i kwarcytem.",
@@ -25,6 +26,13 @@ export const metadata: Metadata = {
     locale: "pl_PL",
     type: "website",
     images: [{ url: "/brand/og.jpg", width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Kokki — podblatowe kuchenki indukcyjne",
+    description:
+      "Indukcja, która znika pod blatem. Minimalizm i elegancja połączone z niezrównaną funkcjonalnością.",
+    images: ["/brand/og.jpg"],
   },
 };
 
