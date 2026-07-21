@@ -24,7 +24,7 @@ export const metadata: Metadata = {
       "Indukcja, która znika pod blatem. Minimalizm i elegancja połączone z niezrównaną funkcjonalnością.",
     locale: "pl_PL",
     type: "website",
-    images: [{ url: "/brand/hero-on.png", width: 1920, height: 900 }],
+    images: [{ url: "/brand/og.jpg", width: 1200, height: 630 }],
   },
 };
 

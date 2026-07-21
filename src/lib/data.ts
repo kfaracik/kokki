@@ -22,7 +22,7 @@ export const PRODUCTS: Product[] = [
     tag: "Układ klasyczny",
     description:
       "Dwa moduły, cztery palniki w układzie znanym z tradycyjnej płyty — tyle że niewidoczne. Pełna strefa gotowania, która znika pod blatem, gdy jej nie używasz.",
-    image: "/brand/pot-on.png",
+    image: "/brand/card-pot.jpg",
     specs: [
       { label: "Moc palnika", value: "1600–2000 W", highlight: true },
       { label: "Palniki", value: "4 (2 moduły)" },
@@ -36,7 +36,7 @@ export const PRODUCTS: Product[] = [
     tag: "Wyspa / wąski blat",
     description:
       "Moduły ułożone równolegle, w jednej linii — idealne na wyspę kuchenną lub wąski blat. Ta sama moc, inna geometria.",
-    image: "/brand/kitchen.png",
+    image: "/brand/card-kitchen.jpg",
     specs: [
       { label: "Moc palnika", value: "1600–2000 W", highlight: true },
       { label: "Układ", value: "2+2 w linii" },
@@ -50,7 +50,7 @@ export const PRODUCTS: Product[] = [
     tag: "Na wymiar",
     description:
       "Konfiguracja pod nietypowe wymiary i układy. Dobierasz rozmieszczenie palników i panelu sterowania — projektujemy z Tobą strefę gotowania.",
-    image: "/brand/chef-coil-bw.png",
+    image: "/brand/card-chef.jpg",
     specs: [
       { label: "Moc palnika", value: "do 2000 W", highlight: true },
       { label: "Układ", value: "indywidualny" },

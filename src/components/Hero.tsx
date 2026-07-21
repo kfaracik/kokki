@@ -75,7 +75,7 @@ export default function Hero() {
           muted
           loop
           playsInline
-          poster="/brand/hero-off.png"
+          poster="/brand/hero-poster.jpg"
           src="/brand/hero.mp4"
         />
       </div>

@@ -56,11 +56,11 @@ export default function Ignite() {
       <div className="ignite-sticky">
         <div className="ignite-media">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img className="off" src="/brand/pot-off.png" alt="" aria-hidden />
+          <img className="off" src="/brand/pot-off.jpg" alt="" aria-hidden />
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             className="on"
-            src="/brand/pot-on.png"
+            src="/brand/pot-on.jpg"
             alt="Podblatowa kuchenka indukcyjna Kokki — rozgrzane pola indukcyjne pod kamiennym blatem"
           />
         </div>

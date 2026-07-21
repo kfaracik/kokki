@@ -87,11 +87,11 @@ export function Invisible() {
             data-cursor
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img className="off" src="/brand/chef-off.png" alt="" aria-hidden />
+            <img className="off" src="/brand/chef-off.jpg" alt="" aria-hidden />
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               className="on"
-              src="/brand/chef-on.png"
+              src="/brand/chef-on.jpg"
               alt="Kucharz gotujący na blacie z niewidoczną indukcją Kokki"
             />
             <div className="hint">
@@ -416,7 +416,7 @@ export function Collab() {
           <Reveal>
             <div className="collab-photo" ref={photoRef}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/brand/teapot.png" alt="Czajnik parzący herbatę na kamiennym blacie z ukrytą indukcją Kokki" />
+              <img src="/brand/collab.jpg" alt="Czajnik parzący herbatę na kamiennym blacie z ukrytą indukcją Kokki" loading="lazy" decoding="async" />
             </div>
           </Reveal>
         </div>
