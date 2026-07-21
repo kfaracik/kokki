@@ -64,7 +64,11 @@ export default function Header() {
           </nav>
           <a href="#kontakt" className="cta" ref={ctaRef}>
             <span className="dot" />
-            Kontakt
+            <span className="cta-label">
+              <span className="cta-text" data-text="Kontakt">
+                Kontakt
+              </span>
+            </span>
           </a>
           <button
             className={`burger${open ? " active" : ""}`}

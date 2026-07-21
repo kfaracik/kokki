@@ -101,17 +101,28 @@ export default function Hero() {
         <div className="actions" data-hero>
           <a href="#oferta" className="cta solid" ref={cta1}>
             <span className="dot" />
-            Nasza oferta
+            <span className="cta-label">
+              <span className="cta-text" data-text="Nasza oferta">
+                Nasza oferta
+              </span>
+            </span>
           </a>
           <a href="#technologia" className="cta" ref={cta2}>
-            Zobacz jak działa
+            <span className="cta-label">
+              <span className="cta-text" data-text="Zobacz jak działa">
+                Zobacz jak działa
+              </span>
+            </span>
           </a>
         </div>
       </div>
-      <div className="scroll-cue">
-        <span>Przewiń</span>
-        <span className="bar" />
-      </div>
+      <a href="#technologia" className="scroll-cue" aria-label="Przewiń do sekcji technologia">
+        <span className="cue-text">Przewiń</span>
+        <span className="cue-track">
+          <i className="cue-comet" />
+        </span>
+        <span className="cue-tip" />
+      </a>
     </section>
   );
 }

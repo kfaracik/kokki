@@ -156,25 +156,59 @@ export function Invisible() {
 
 export function Panel() {
   const stageRef = useRef<HTMLDivElement>(null);
-  const imgRef = useRef<HTMLImageElement>(null);
+  const rotorRef = useRef<HTMLDivElement>(null);
+  const glareRef = useRef<HTMLDivElement>(null);
   const glowRef = useRef<HTMLDivElement>(null);
 
-  const onMove = (e: React.MouseEvent) => {
+  useEffect(() => {
     const stage = stageRef.current;
-    const img = imgRef.current;
-    const glow = glowRef.current;
-    if (!stage || !img) return;
+    const rotor = rotorRef.current;
+    if (!stage || !rotor) return;
+    if (!window.matchMedia("(hover: hover)").matches) return;
+    gsap.set(rotor, { transformPerspective: 1100 });
+    const rx = gsap.quickTo(rotor, "rotationX", {
+      duration: 0.9,
+      ease: "power3",
+    });
+    const ry = gsap.quickTo(rotor, "rotationY", {
+      duration: 0.9,
+      ease: "power3",
+    });
+    const move = (e: MouseEvent) => {
+      const r = stage.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width - 0.5;
+      const y = (e.clientY - r.top) / r.height - 0.5;
+      ry(x * 9);
+      rx(-y * 7);
+      glareRef.current?.style.setProperty("--gx", `${(x + 0.5) * 100}%`);
+      glareRef.current?.style.setProperty("--gy", `${(y + 0.5) * 100}%`);
+      if (glowRef.current) {
+        glowRef.current.style.left = `${e.clientX - r.left}px`;
+        glowRef.current.style.top = `${e.clientY - r.top}px`;
+      }
+    };
+    const leave = () => {
+      rx(0);
+      ry(0);
+    };
+    stage.addEventListener("mousemove", move);
+    stage.addEventListener("mouseleave", leave);
+    return () => {
+      stage.removeEventListener("mousemove", move);
+      stage.removeEventListener("mouseleave", leave);
+    };
+  }, []);
+
+  const onPointerDown = (e: React.PointerEvent) => {
+    const stage = stageRef.current;
+    if (!stage) return;
     const r = stage.getBoundingClientRect();
-    const x = (e.clientX - r.left) / r.width - 0.5;
-    const y = (e.clientY - r.top) / r.height - 0.5;
-    img.style.transform = `rotateY(${x * 10}deg) rotateX(${-y * 8}deg)`;
-    if (glow) {
-      glow.style.left = `${e.clientX - r.left}px`;
-      glow.style.top = `${e.clientY - r.top}px`;
-    }
-  };
-  const onLeave = () => {
-    if (imgRef.current) imgRef.current.style.transform = "";
+    const ripple = document.createElement("span");
+    ripple.className = "panel-ripple";
+    ripple.style.left = `${e.clientX - r.left}px`;
+    ripple.style.top = `${e.clientY - r.top}px`;
+    stage.appendChild(ripple);
+    ripple.addEventListener("animationend", () => ripple.remove());
   };
 
   return (
@@ -198,18 +232,21 @@ export function Panel() {
           <div
             className="panel-stage"
             ref={stageRef}
-            onMouseMove={onMove}
-            onMouseLeave={onLeave}
+            onPointerDown={onPointerDown}
             data-cursor
           >
             <div className="panel-glow" ref={glowRef} />
             <div className="panel-tilt">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                ref={imgRef}
-                src="/brand/panel.png"
-                alt="Panel sterowania Kokki — cztery pola grzewcze, suwak mocy, timer i blokada"
-              />
+              <div className="panel-rotor" ref={rotorRef}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/brand/panel.png"
+                  alt="Panel sterowania Kokki — cztery pola grzewcze, suwak mocy, timer i blokada"
+                />
+                <div className="panel-glare" ref={glareRef} />
+                <div className="panel-sheen" />
+              </div>
+              <div className="panel-floor" />
             </div>
             <div className="panel-chips">
               <span className="chip">4 pola grzewcze</span>
@@ -552,7 +589,11 @@ export function Contact() {
               onClick={(e) => e.preventDefault()}
             >
               <span className="dot" />
-              Wyślij wiadomość
+              <span className="cta-label">
+                <span className="cta-text" data-text="Wyślij wiadomość">
+                  Wyślij wiadomość
+                </span>
+              </span>
             </a>
           </form>
         </Reveal>
