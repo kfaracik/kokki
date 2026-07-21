@@ -71,7 +71,7 @@ export default function Ignite() {
             {IGNITE_STEPS.map((s, i) => (
               <div
                 key={s.index}
-                className={`ignite-step${i === step ? " active" : ""}`}
+                className={`ignite-step${i === step ? " active" : i < step ? " past" : " future"}`}
               >
                 <div className="ignite-index">{s.index}</div>
                 <h2>{s.title}</h2>

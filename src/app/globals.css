@@ -610,15 +610,52 @@ html.menu-open .site-header {
   position: absolute;
   inset: 0;
   opacity: 0;
-  transform: translateY(28px);
-  transition:
-    opacity 0.6s var(--ease),
-    transform 0.6s var(--ease);
   pointer-events: none;
+  transition: opacity 0.45s var(--ease);
 }
 .ignite-step.active {
   opacity: 1;
+  transition: opacity 0.55s var(--ease) 0.06s;
+}
+.ignite-step .ignite-index,
+.ignite-step h2,
+.ignite-step p {
+  opacity: 0;
+  filter: blur(7px);
+  transition:
+    opacity 0.4s var(--ease),
+    transform 0.5s var(--ease),
+    filter 0.5s var(--ease);
+  will-change: transform, filter;
+}
+.ignite-step.future .ignite-index,
+.ignite-step.future h2,
+.ignite-step.future p {
+  transform: translateY(30px);
+}
+.ignite-step.past .ignite-index,
+.ignite-step.past h2,
+.ignite-step.past p {
+  transform: translateY(-26px);
+}
+.ignite-step.active .ignite-index,
+.ignite-step.active h2,
+.ignite-step.active p {
+  opacity: 1;
   transform: translateY(0);
+  filter: blur(0);
+}
+.ignite-step.active .ignite-index {
+  transition-duration: 0.6s, 0.7s, 0.7s;
+  transition-delay: 0.1s;
+}
+.ignite-step.active h2 {
+  transition-duration: 0.65s, 0.8s, 0.8s;
+  transition-delay: 0.18s;
+}
+.ignite-step.active p {
+  transition-duration: 0.65s, 0.8s, 0.8s;
+  transition-delay: 0.3s;
 }
 .ignite-step h2 {
   font-size: clamp(2rem, 3.6vw, 3.4rem);
@@ -632,11 +669,30 @@ html.menu-open .site-header {
   max-width: 44ch;
 }
 .ignite-index {
+  display: flex;
+  align-items: center;
+  gap: 14px;
   font-family: var(--font-outfit), sans-serif;
   color: var(--accent);
   font-size: 0.78rem;
   letter-spacing: 0.24em;
   margin-bottom: 18px;
+}
+.ignite-index::after {
+  content: "";
+  width: 46px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--accent), rgba(232, 98, 42, 0));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.7s var(--ease) 0.35s;
+}
+.ignite-step.active .ignite-index::after {
+  transform: scaleX(1);
+}
+.ignite-step.past .ignite-index::after,
+.ignite-step.future .ignite-index::after {
+  transition-delay: 0s;
 }
 .ignite-rail {
   position: absolute;
@@ -978,45 +1034,99 @@ section.pad {
 .collab-cards {
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  margin-top: 44px;
+  margin-top: 48px;
 }
 .collab-card {
-  border: 1px solid var(--line);
-  border-radius: var(--r-m);
-  padding: 24px 26px;
   position: relative;
-  background: linear-gradient(180deg, var(--bg-3), var(--bg-2));
-  transition:
-    border-color 0.4s var(--ease),
-    transform 0.4s var(--ease);
+  display: grid;
+  grid-template-columns: 64px 1fr 20px;
+  column-gap: 20px;
+  align-items: start;
+  padding: 30px 2px 32px 0;
+  border-top: 1px solid var(--line);
+  overflow: hidden;
 }
-.collab-card:hover {
-  border-color: rgba(232, 98, 42, 0.4);
-  transform: translateX(6px);
+.collab-cards .reveal:last-child .collab-card {
+  border-bottom: 1px solid var(--line);
 }
-.collab-card .diamond {
+.collab-card::before {
+  content: "";
   position: absolute;
-  top: 30px;
-  right: 26px;
-  width: 8px;
-  height: 8px;
-  background: var(--accent);
-  transform: rotate(45deg);
-  transition: transform 0.5s var(--ease);
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, var(--accent), rgba(232, 98, 42, 0));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.7s var(--ease);
 }
-.collab-card:hover .diamond {
-  transform: rotate(225deg);
+.collab-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    420px 150px at 14% 32%,
+    rgba(232, 98, 42, 0.09),
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.6s var(--ease);
+  pointer-events: none;
+}
+.collab-card:hover::before {
+  transform: scaleX(1);
+}
+.collab-card:hover::after {
+  opacity: 1;
+}
+.collab-num {
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 0.78rem;
+  letter-spacing: 0.24em;
+  color: var(--muted);
+  padding-top: 7px;
+  transition: color 0.4s var(--ease);
+}
+.collab-card:hover .collab-num {
+  color: var(--accent);
 }
 .collab-card h3 {
-  font-size: 1.1rem;
-  margin-bottom: 8px;
-  padding-right: 30px;
+  font-size: clamp(1.15rem, 1.6vw, 1.45rem);
+  margin-bottom: 10px;
+  transition: transform 0.55s var(--ease);
 }
 .collab-card p {
   color: var(--muted);
-  font-size: 0.9rem;
-  line-height: 1.65;
+  font-size: 0.92rem;
+  line-height: 1.7;
+  max-width: 52ch;
+  transition:
+    color 0.55s var(--ease),
+    transform 0.55s var(--ease) 0.05s;
+}
+.collab-card:hover h3 {
+  transform: translateX(10px);
+}
+.collab-card:hover p {
+  transform: translateX(10px);
+  color: rgba(245, 242, 236, 0.78);
+}
+.collab-card .diamond {
+  width: 8px;
+  height: 8px;
+  margin-top: 12px;
+  justify-self: end;
+  background: var(--accent);
+  opacity: 0;
+  transform: rotate(45deg) scale(0);
+  transition:
+    transform 0.6s var(--ease),
+    opacity 0.4s var(--ease);
+}
+.collab-card:hover .diamond {
+  opacity: 1;
+  transform: rotate(225deg) scale(1);
 }
 .collab-photo {
   position: relative;
@@ -1319,6 +1429,11 @@ section.pad {
   .collab-photo {
     min-height: 300px;
   }
+  .collab-card {
+    grid-template-columns: 44px 1fr 16px;
+    column-gap: 14px;
+    padding: 24px 0 26px;
+  }
   .products {
     grid-template-columns: 1fr;
   }
@@ -1337,5 +1452,16 @@ section.pad {
   .grain,
   .scroll-cue .bar {
     animation: none;
+  }
+  .ignite-step .ignite-index,
+  .ignite-step h2,
+  .ignite-step p {
+    transition: opacity 0.3s ease;
+    transform: none;
+    filter: none;
+  }
+  .collab-card h3,
+  .collab-card p {
+    transition: none;
   }
 }

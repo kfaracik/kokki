@@ -402,12 +402,15 @@ export function Collab() {
               </p>
             </Reveal>
             <div className="collab-cards">
-              {COLLAB_CARDS.map((c) => (
+              {COLLAB_CARDS.map((c, i) => (
                 <Reveal key={c.title}>
                   <div className="collab-card" data-cursor>
+                    <span className="collab-num">{String(i + 1).padStart(2, "0")}</span>
+                    <div>
+                      <h3>{c.title}</h3>
+                      <p>{c.body}</p>
+                    </div>
                     <span className="diamond" />
-                    <h3>{c.title}</h3>
-                    <p>{c.body}</p>
                   </div>
                 </Reveal>
               ))}
