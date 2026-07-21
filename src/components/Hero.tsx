@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { prefersReducedMotion } from "@/lib/motion";
 import { useMagnetic } from "./Header";
 
 export default function Hero() {
@@ -30,16 +31,18 @@ export default function Hero() {
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
+    const reduced = prefersReducedMotion();
     const ctx = gsap.context(() => {
-      gsap.set("[data-hero]", { y: 44, opacity: 0 });
+      gsap.set("[data-hero]", { y: reduced ? 0 : 44, opacity: 0 });
       gsap.to("[data-hero]", {
         y: 0,
         opacity: 1,
-        duration: 1.1,
-        stagger: 0.12,
+        duration: reduced ? 0.5 : 1.1,
+        stagger: reduced ? 0 : 0.12,
         ease: "power3.out",
-        delay: 1.6,
+        delay: reduced ? 0.9 : 1.6,
       });
+      if (reduced) return;
       gsap.to(".hero-content", {
         yPercent: 26,
         opacity: 0.3,

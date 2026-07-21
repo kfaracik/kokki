@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { FAQ, PRODUCTS, TICKER_ITEMS } from "@/lib/data";
+import { prefersReducedMotion } from "@/lib/motion";
 import { useMagnetic } from "./Header";
 import Logo from "./Logo";
 
@@ -12,6 +13,7 @@ export function Ticker() {
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
+    if (prefersReducedMotion()) return;
     const ctx = gsap.context(() => {
       gsap.to(trackRef.current, {
         xPercent: -50,
@@ -43,11 +45,13 @@ export function Reveal({ children }: { children: React.ReactNode }) {
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
+    const reduced = prefersReducedMotion();
     const ctx = gsap.context(() => {
+      if (reduced) gsap.set(ref.current, { y: 0 });
       gsap.to(ref.current, {
         opacity: 1,
         y: 0,
-        duration: 0.9,
+        duration: reduced ? 0.4 : 0.9,
         ease: "power3.out",
         scrollTrigger: { trigger: ref.current, start: "top 84%" },
       });
@@ -165,6 +169,7 @@ export function Panel() {
     const rotor = rotorRef.current;
     if (!stage || !rotor) return;
     if (!window.matchMedia("(hover: hover)").matches) return;
+    if (prefersReducedMotion()) return;
     gsap.set(rotor, { transformPerspective: 1100 });
     const rx = gsap.quickTo(rotor, "rotationX", {
       duration: 0.9,
@@ -273,6 +278,10 @@ function Counter({ to, suffix }: { to: number; suffix?: string }) {
       start: "top 88%",
       once: true,
       onEnter: () => {
+        if (prefersReducedMotion()) {
+          el.textContent = String(to);
+          return;
+        }
         const obj = { v: 0 };
         gsap.to(obj, {
           v: to,
@@ -398,6 +407,7 @@ export function Collab() {
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
+    if (prefersReducedMotion()) return;
     const ctx = gsap.context(() => {
       gsap.fromTo(
         photoRef.current?.querySelector("img") ?? null,

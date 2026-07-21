@@ -44,6 +44,9 @@ export default function RootLayout({
   return (
     <html lang="pl">
       <body className={`${outfit.variable} ${lato.variable}`}>
+        <a href="#main" className="skip-link">
+          Przejdź do treści
+        </a>
         <Chrome />
         {children}
       </body>

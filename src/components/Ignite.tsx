@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { IGNITE_STEPS } from "@/lib/data";
+import { prefersReducedMotion } from "@/lib/motion";
 
 const RIM_X = 0.229;
 const RIM_Y = 0.31;
@@ -50,18 +51,19 @@ export default function Ignite() {
         { opacity: 0 },
         { opacity: 1, ease: "power1.inOut", duration: 0.5 },
         0.12,
-      )
-        .fromTo(
+      ).to(
+        ".ignite-media .off",
+        { opacity: 0.35, ease: "power1.inOut", duration: 0.4 },
+        0.55,
+      );
+      if (!prefersReducedMotion()) {
+        tl.fromTo(
           ".ignite-media",
           { scale: 1.12 },
           { scale: 1, ease: "none", duration: 1 },
           0,
-        )
-        .to(
-          ".ignite-media .off",
-          { opacity: 0.35, ease: "power1.inOut", duration: 0.4 },
-          0.55,
         );
+      }
     }, rootRef);
     return () => ctx.revert();
   }, []);

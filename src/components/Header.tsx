@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { prefersReducedMotion } from "@/lib/motion";
 import Logo from "./Logo";
 
 function magnetize(el: HTMLElement) {
@@ -26,6 +27,7 @@ export function useMagnetic() {
   useEffect(() => {
     if (!ref.current) return;
     if (!window.matchMedia("(hover: hover)").matches) return;
+    if (prefersReducedMotion()) return;
     return magnetize(ref.current);
   }, []);
   return ref;

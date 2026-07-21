@@ -59,6 +59,36 @@ body {
   color: #fff;
 }
 
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+.field input:focus-visible,
+.field textarea:focus-visible {
+  outline: none;
+}
+
+.skip-link {
+  position: fixed;
+  top: 14px;
+  left: 14px;
+  z-index: 600;
+  padding: 12px 20px;
+  background: var(--bg);
+  color: var(--ink);
+  border: 1px solid var(--accent);
+  border-radius: var(--r-s);
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 0.8rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  transform: translateY(-200%);
+}
+.skip-link:focus-visible {
+  transform: translateY(0);
+}
+
 h1,
 h2,
 h3,
@@ -1605,10 +1635,16 @@ section.pad {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
   .grain,
   .scroll-cue .cue-comet,
   .scroll-cue .cue-tip,
-  .panel-tilt {
+  .panel-tilt,
+  .invisible-photo .hint i,
+  .o-group:hover .o-glow,
+  .o-group.lit .o-glow {
     animation: none;
   }
   .ignite-step .ignite-index,
@@ -1619,7 +1655,20 @@ section.pad {
     filter: none;
   }
   .collab-card h3,
-  .collab-card p {
+  .collab-card p,
+  .cta .cta-text,
+  .mobile-menu nav a {
     transition: none;
+  }
+  .cta:hover .cta-text {
+    transform: none;
+  }
+  .cta::after,
+  .panel-sheen::before {
+    display: none;
+  }
+  .card:hover,
+  .card:hover .visual img {
+    transform: none;
   }
 }

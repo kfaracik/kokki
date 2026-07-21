@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
+import { prefersReducedMotion } from "@/lib/motion";
 import Logo from "./Logo";
 
 export default function Chrome() {
@@ -14,16 +15,11 @@ export default function Chrome() {
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
+    const reduced = prefersReducedMotion();
 
-    const lenis = new Lenis({
-      duration: 1.1,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-    });
-    lenis.on("scroll", ScrollTrigger.update);
-    (window as unknown as { lenis: Lenis }).lenis = lenis;
-    const raf = (time: number) => lenis.raf(time * 1000);
-    gsap.ticker.add(raf);
-    gsap.ticker.lagSmoothing(0);
+    let lenis: Lenis | null = null;
+    let raf: ((time: number) => void) | null = null;
+    let nativeScroll: (() => void) | null = null;
 
     const onScroll = ({ scroll, limit }: { scroll: number; limit: number }) => {
       if (progressRef.current) {
@@ -33,7 +29,27 @@ export default function Chrome() {
         .querySelector(".site-header")
         ?.classList.toggle("scrolled", scroll > 40);
     };
-    lenis.on("scroll", onScroll);
+
+    if (!reduced) {
+      lenis = new Lenis({
+        duration: 1.1,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      });
+      lenis.on("scroll", ScrollTrigger.update);
+      (window as unknown as { lenis: Lenis }).lenis = lenis;
+      raf = (time: number) => lenis?.raf(time * 1000);
+      gsap.ticker.add(raf);
+      gsap.ticker.lagSmoothing(0);
+      lenis.on("scroll", onScroll);
+    } else {
+      nativeScroll = () => {
+        const limit =
+          document.documentElement.scrollHeight - window.innerHeight;
+        onScroll({ scroll: window.scrollY, limit });
+      };
+      window.addEventListener("scroll", nativeScroll, { passive: true });
+      nativeScroll();
+    }
 
     const anchorHandler = (e: Event) => {
       const a = (e.target as HTMLElement).closest<HTMLAnchorElement>(
@@ -41,7 +57,7 @@ export default function Chrome() {
       );
       if (!a) return;
       const id = a.getAttribute("href");
-      if (id && id.length > 1 && document.querySelector(id)) {
+      if (id && id.length > 1 && document.querySelector(id) && lenis) {
         e.preventDefault();
         lenis.scrollTo(id, { offset: -10 });
       }
@@ -93,7 +109,17 @@ export default function Chrome() {
 
     const pre = preloaderRef.current;
     const preTl = gsap.timeline();
-    if (pre) {
+    if (pre && reduced) {
+      const logo = pre.querySelector("svg");
+      preTl
+        .to(logo, { opacity: 1, duration: 0.4, delay: 0.1 })
+        .to(pre, {
+          opacity: 0,
+          duration: 0.4,
+          delay: 0.5,
+          onComplete: () => pre.remove(),
+        });
+    } else if (pre) {
       const logo = pre.querySelector("svg");
       const oGroup = pre.querySelector(".o-group");
       preTl
@@ -112,12 +138,13 @@ export default function Chrome() {
     return () => {
       preTl.kill();
       document.removeEventListener("click", anchorHandler);
+      if (nativeScroll) window.removeEventListener("scroll", nativeScroll);
       if (onMove) window.removeEventListener("mousemove", onMove);
       if (onOver) document.removeEventListener("mouseover", onOver);
       if (onOut) document.removeEventListener("mouseout", onOut);
       cancelAnimationFrame(ringRafId);
-      gsap.ticker.remove(raf);
-      lenis.destroy();
+      if (raf) gsap.ticker.remove(raf);
+      lenis?.destroy();
     };
   }, []);
 

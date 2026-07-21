@@ -34,7 +34,7 @@ Docelowo spięta z backendem/adminem na wzór infrastruktury new-pawnshop (leady
 - [x] Preloader → inline Logo z zapłonem „O" podczas ładowania
 - [x] Favicon (palnik: pomarańczowa tarcza + pierścień na czerni) + meta OG (hero-on.png)
 - [ ] Weryfikacja wizualna panel-tilt + finalny mobile pass na realnym urządzeniu (pane renderer ogranicza zrzuty)
-- [ ] A11y: pełny audit prefers-reduced-motion / focus-visible
+- [x] A11y: pełny audit prefers-reduced-motion / focus-visible — reduced: Lenis→native scroll, preloader/hero fade-only, bez parallaxów/tickera/tilt/magnetic/sheen, countery natychmiastowe, para na canvasie off; focus: globalny `:focus-visible` (accent outline), skip-link „Przejdź do treści" → `#main`
 
 ## 🔶 Faza 4 — Publikacja
 
