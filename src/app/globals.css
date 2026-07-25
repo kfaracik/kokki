@@ -176,6 +176,13 @@ a {
   .cursor-ring {
     display: none;
   }
+  .collab-card .diamond {
+    opacity: 0.85;
+    transform: rotate(45deg) scale(1);
+  }
+  .collab-card p {
+    color: rgba(245, 242, 236, 0.72);
+  }
 }
 
 /* ---------- progress bar ---------- */
@@ -780,30 +787,11 @@ html.menu-open .site-header {
   max-width: 44ch;
 }
 .ignite-index {
-  display: flex;
-  align-items: center;
-  gap: 14px;
   font-family: var(--font-outfit), sans-serif;
   color: var(--accent);
   font-size: 0.78rem;
   letter-spacing: 0.24em;
   margin-bottom: 18px;
-}
-.ignite-index::after {
-  content: "";
-  width: 46px;
-  height: 1px;
-  background: linear-gradient(90deg, var(--accent), rgba(232, 98, 42, 0));
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.7s var(--ease) 0.35s;
-}
-.ignite-step.active .ignite-index::after {
-  transform: scaleX(1);
-}
-.ignite-step.past .ignite-index::after,
-.ignite-step.future .ignite-index::after {
-  transition-delay: 0s;
 }
 .ignite-rail {
   position: absolute;
@@ -1629,8 +1617,59 @@ section.pad {
   .ignite-rail {
     display: none;
   }
+  .ignite-media img {
+    object-position: 30% center;
+  }
+  .ignite-shade {
+    background:
+      linear-gradient(0deg, var(--bg) 0%, transparent 14%),
+      linear-gradient(
+        180deg,
+        rgba(10, 10, 10, 0.5) 0%,
+        rgba(10, 10, 10, 0.16) 34%,
+        rgba(10, 10, 10, 0.66) 74%,
+        rgba(10, 10, 10, 0.82) 100%
+      );
+  }
+  .ignite-heat {
+    left: 50%;
+    width: 60vw;
+    height: 38vw;
+  }
+  .ignite-inner {
+    align-items: flex-end;
+    padding-bottom: 9svh;
+  }
   .ignite-copy {
-    min-height: 340px;
+    min-height: 300px;
+  }
+  .ignite-step h2 {
+    margin-bottom: 14px;
+  }
+  .ignite-step p {
+    font-size: 0.95rem;
+    line-height: 1.65;
+  }
+  .ignite-step .ignite-index,
+  .ignite-step h2,
+  .ignite-step p {
+    filter: none;
+    transition:
+      opacity 0.35s var(--ease),
+      transform 0.45s var(--ease);
+  }
+  .ignite-step.future .ignite-index,
+  .ignite-step.future h2,
+  .ignite-step.future p {
+    transform: translateY(18px);
+  }
+  .ignite-step.past .ignite-index,
+  .ignite-step.past h2,
+  .ignite-step.past p {
+    transform: translateY(-14px);
+  }
+  .reveal {
+    transform: translateY(26px);
   }
 }
 
