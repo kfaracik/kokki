@@ -48,11 +48,11 @@ Docelowo spięta z backendem/adminem na wzór infrastruktury new-pawnshop (leady
 
 ## ⬜ Faza 5 — Backend + Admin (fork new-pawnshop)
 
-- [ ] Fork warstwy admin: NextAuth (Google) + RBAC (admin/pracownik) + audit log + `/team`
-- [ ] Model danych: `products` (moduły/konfiguracje — zgodny z `src/lib/data.ts`), `faq`, **`inquiries` (skrzynka leadów zamiast orders)**
-- [ ] Endpoint formularza kontaktowego → inquiries + powiadomienie e-mail
-- [ ] Upload zdjęć produktów (base64 → S3 opcjonalnie)
-- [ ] Deploy backendu (Fly.io, wzór new-pawnshop-api)
+- [x] Backend `~/Projects/kokki-backend` (Express+TS+Mongoose, fork rdzenia new-pawnshop-backend): modele `products`/`faq`/`inquiries`, publiczne GET + POST inquiries (zod, honeypot, rate limit 5/15 min), admin CRUD za `ADMIN_TOKEN` (Bearer, timing-safe), powiadomienie e-mail przez SMTP env, seed danych strony; przetestowany curl E2E
+- [x] Fork warstwy admin → `~/Projects/kokki-admin`: NextAuth (Google + dev-login) + RBAC (admin/pracownik) + audit log + `/team` zachowane; Pulpit/Zapytania/Produkty/FAQ na proxy BFF (`KOKKI_BACKEND_URL`+`KOKKI_ADMIN_TOKEN`); branding Kokki (pomarańcz); zweryfikowany E2E na żywym API (port 3007, dev-login)
+- [x] Endpoint formularza kontaktowego → inquiries + e-mail; **formularz na stronie podpięty** (`NEXT_PUBLIC_API_URL`, stany wysyłania/potwierdzenia/błędu, honeypot) — E2E OK lokalnie
+- [x] Upload zdjęć produktów (base64 przez `/api/upload` w adminie; S3/R2 opcjonalnie przez env)
+- [ ] Deploy backendu — **zablokowane**: Fly.io trial wygasł (wymaga dodania karty na koncie larkfreeme70.55@gmail.com); alternatywa: Render dashboard (gotowe `render.yaml` + `Dockerfile` w kokki-backend). Po deployu: ustawić `NEXT_PUBLIC_API_URL` w Vercel (projekt kokki) i env admina
 
 ## ⬜ Faza 6 — Integracja
 
