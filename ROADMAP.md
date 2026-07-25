@@ -43,7 +43,8 @@ Docelowo spięta z backendem/adminem na wzór infrastruktury new-pawnshop (leady
 - [x] Auto-deploy z GitHuba — repo podpięte, push na `main` = deploy produkcji (zweryfikowany)
 - [x] Optymalizacja grafik — Współpraca dostała ostry kadr 1632px z renderu kuchni (zamiast rozciąganego 692px czajnika); pary pot/chef + poster hero jako JPEG, dedykowane miniatury kart, OG 1200×630; waga obrazów strony ~11 MB → ~1 MB (QA wizualne na produkcji w realnym Chrome)
 - [ ] Domena kokki.pl (przepięcie DNS po akceptacji znajomego)
-- [ ] Lighthouse pass (LCP z wideo hero!), analityka, cookie banner (privacy-first)
+- [x] Lighthouse pass (mobile, produkcja): Perf 64 → **85**, A11y/BP/SEO **100** — panel.png 189 KiB → webp 10.7 KiB, chef 1920→1280, preloader ~2.45s → ~1.9s, wejście hero nakłada się na kurtynę (LCP 4.5→3.8s, TBT 590→20ms, SI 5.9→4.8s)
+- [x] Analityka: @vercel/analytics (cookieless — cookie banner niepotrzebny). **Wymaga 1 kliknięcia: Vercel dashboard → projekt kokki → Analytics → Enable**
 
 ## ⬜ Faza 5 — Backend + Admin (fork new-pawnshop)
 

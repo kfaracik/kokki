@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Outfit, Lato } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import Chrome from "@/components/Chrome";
 
@@ -49,6 +50,7 @@ export default function RootLayout({
         </a>
         <Chrome />
         {children}
+        <Analytics />
       </body>
     </html>
   );
