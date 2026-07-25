@@ -550,7 +550,61 @@ export function Faq() {
 }
 
 export function Contact() {
-  const btnRef = useMagnetic();
+  const btnRef = useMagnetic<HTMLButtonElement>();
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">(
+    "idle",
+  );
+  const [errorMsg, setErrorMsg] = useState("");
+
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (status === "sending") return;
+    const form = e.currentTarget;
+    const data = new FormData(form);
+    const payload = {
+      name: String(data.get("name") || ""),
+      email: String(data.get("email") || ""),
+      message: String(data.get("message") || ""),
+      company: String(data.get("company") || ""),
+    };
+    const base = process.env.NEXT_PUBLIC_API_URL;
+    if (!base) {
+      setErrorMsg(
+        "Wysyłka formularza jest chwilowo niedostępna. Spróbuj ponownie później.",
+      );
+      setStatus("error");
+      return;
+    }
+    setStatus("sending");
+    try {
+      const res = await fetch(
+        `${base.replace(/\/+$/, "")}/api/v1/inquiries`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        },
+      );
+      if (!res.ok) {
+        const body = await res.json().catch(() => null);
+        setErrorMsg(
+          body?.errors?.[0]?.message ||
+            body?.message ||
+            "Nie udało się wysłać wiadomości. Spróbuj ponownie.",
+        );
+        setStatus("error");
+        return;
+      }
+      setStatus("sent");
+      form.reset();
+    } catch {
+      setErrorMsg(
+        "Nie udało się wysłać wiadomości. Sprawdź połączenie i spróbuj ponownie.",
+      );
+      setStatus("error");
+    }
+  };
+
   return (
     <section className="pad contact" id="kontakt">
       <div className="wrap contact-grid">
@@ -574,18 +628,48 @@ export function Contact() {
           </p>
         </Reveal>
         <Reveal>
-          <form className="form" onSubmit={(e) => e.preventDefault()}>
+          <form className="form" onSubmit={onSubmit}>
             <div className="field">
-              <input type="text" id="f-name" placeholder=" " autoComplete="name" />
+              <input
+                type="text"
+                id="f-name"
+                name="name"
+                placeholder=" "
+                autoComplete="name"
+                required
+                minLength={2}
+              />
               <label htmlFor="f-name">Imię</label>
             </div>
             <div className="field">
-              <input type="email" id="f-email" placeholder=" " autoComplete="email" />
+              <input
+                type="email"
+                id="f-email"
+                name="email"
+                placeholder=" "
+                autoComplete="email"
+                required
+              />
               <label htmlFor="f-email">E-mail</label>
             </div>
             <div className="field">
-              <textarea id="f-msg" rows={3} placeholder=" " />
+              <textarea
+                id="f-msg"
+                name="message"
+                rows={3}
+                placeholder=" "
+                required
+                minLength={10}
+              />
               <label htmlFor="f-msg">Twoja wiadomość</label>
+            </div>
+            <div className="field hp" aria-hidden="true">
+              <input
+                type="text"
+                name="company"
+                tabIndex={-1}
+                autoComplete="off"
+              />
             </div>
             <small>
               Podanie danych, w tym adresu e-mail, jest dobrowolne, ale
@@ -593,20 +677,39 @@ export function Contact() {
               prawo dostępu do swoich danych, ich poprawiania oraz żądania
               zaprzestania przetwarzania.
             </small>
-            <a
-              href="#kontakt"
-              className="cta solid"
-              ref={btnRef}
-              style={{ alignSelf: "flex-start", marginTop: 6 }}
-              onClick={(e) => e.preventDefault()}
-            >
-              <span className="dot" />
-              <span className="cta-label">
-                <span className="cta-text" data-text="Wyślij wiadomość">
-                  Wyślij wiadomość
-                </span>
-              </span>
-            </a>
+            {status === "sent" ? (
+              <p className="form-status ok" role="status">
+                <span className="diamond-mark" /> Dziękujemy — Twoja wiadomość
+                dotarła. Odezwiemy się wkrótce.
+              </p>
+            ) : (
+              <>
+                {status === "error" && (
+                  <p className="form-status err" role="alert">
+                    {errorMsg}
+                  </p>
+                )}
+                <button
+                  type="submit"
+                  className="cta solid"
+                  ref={btnRef}
+                  disabled={status === "sending"}
+                  style={{ alignSelf: "flex-start", marginTop: 6 }}
+                >
+                  <span className="dot" />
+                  <span className="cta-label">
+                    <span
+                      className="cta-text"
+                      data-text={
+                        status === "sending" ? "Wysyłanie…" : "Wyślij wiadomość"
+                      }
+                    >
+                      {status === "sending" ? "Wysyłanie…" : "Wyślij wiadomość"}
+                    </span>
+                  </span>
+                </button>
+              </>
+            )}
           </form>
         </Reveal>
       </div>

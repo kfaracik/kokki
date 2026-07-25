@@ -22,8 +22,8 @@ function magnetize(el: HTMLElement) {
   };
 }
 
-export function useMagnetic() {
-  const ref = useRef<HTMLAnchorElement>(null);
+export function useMagnetic<T extends HTMLElement = HTMLAnchorElement>() {
+  const ref = useRef<T>(null);
   useEffect(() => {
     if (!ref.current) return;
     if (!window.matchMedia("(hover: hover)").matches) return;

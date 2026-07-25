@@ -1463,6 +1463,39 @@ section.pad {
   font-size: 0.72rem;
   line-height: 1.6;
 }
+.form .hp {
+  position: absolute;
+  left: -9999px;
+  opacity: 0;
+  pointer-events: none;
+}
+button.cta {
+  cursor: pointer;
+}
+.cta:disabled {
+  opacity: 0.6;
+  pointer-events: none;
+}
+.form-status {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+.form-status.ok {
+  color: var(--ink);
+}
+.form-status.err {
+  color: #e8874f;
+}
+.form-status .diamond-mark {
+  flex: none;
+  width: 9px;
+  height: 9px;
+  background: var(--accent);
+  transform: rotate(45deg);
+}
 
 /* ---------- footer ---------- */
 .foot {
