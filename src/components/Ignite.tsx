@@ -94,13 +94,15 @@ export default function Ignite() {
       const iw = img.naturalWidth || 1920;
       const ih = img.naturalHeight || 994;
       const scale = Math.max(vw / iw, vh / ih);
-      const ox = (iw * scale - vw) * MEDIA_FOCUS_X;
+      const focusX =
+        parseFloat(getComputedStyle(img).objectPosition) / 100 || MEDIA_FOCUS_X;
+      const ox = (iw * scale - vw) * focusX;
       const oy = (ih * scale - vh) * 0.5;
-      return {
-        x: RIM_X * iw * scale - ox,
-        y: RIM_Y * ih * scale - oy,
-        spread: 0.075 * iw * scale,
-      };
+      const x = RIM_X * iw * scale - ox;
+      const spread = 0.075 * iw * scale;
+      const lo = Math.min(Math.max(x - spread, 6), vw - 12);
+      const hi = Math.max(Math.min(x + spread, vw - 6), lo + 6);
+      return { lo, hi, y: RIM_Y * ih * scale - oy, spread };
     };
 
     const tick = () => {
@@ -114,7 +116,7 @@ export default function Ignite() {
       if (heat > 0 && bubbles.length < 64 && Math.random() < heat * 0.55) {
         const a = rim();
         bubbles.push({
-          x: (a.x + (Math.random() - 0.5) * a.spread * 2) * dpr,
+          x: (a.lo + Math.random() * (a.hi - a.lo)) * dpr,
           y: (a.y + (Math.random() - 0.5) * a.spread * 0.4) * dpr,
           vy: -(0.35 + Math.random() * 0.75) * dpr,
           r: (1.4 + Math.random() * 2.8) * dpr,
