@@ -245,7 +245,9 @@ export function Panel() {
               <div className="panel-rotor" ref={rotorRef}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src="/brand/panel.png"
+                  src="/brand/panel.webp"
+                  width={1080}
+                  height={369}
                   alt="Panel sterowania Kokki — cztery pola grzewcze, suwak mocy, timer i blokada"
                 />
                 <div className="panel-glare" ref={glareRef} />

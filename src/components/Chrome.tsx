@@ -123,16 +123,20 @@ export default function Chrome() {
       const logo = pre.querySelector("svg");
       const oGroup = pre.querySelector(".o-group");
       preTl
-        .to(logo, { opacity: 1, duration: 0.55, ease: "power2.out", delay: 0.1 })
-        .add(() => oGroup?.classList.add("lit"), "+=0.15")
-        .to(logo, { opacity: 1, duration: 0.55 })
-        .to(logo, { opacity: 0, y: -16, duration: 0.4, ease: "power2.in" })
-        .to(pre, {
-          yPercent: -100,
-          duration: 0.7,
-          ease: "power3.inOut",
-          onComplete: () => pre.remove(),
-        });
+        .to(logo, { opacity: 1, duration: 0.45, ease: "power2.out", delay: 0.05 })
+        .add(() => oGroup?.classList.add("lit"), "+=0.1")
+        .to(logo, { opacity: 1, duration: 0.4 })
+        .to(logo, { opacity: 0, y: -16, duration: 0.35, ease: "power2.in" })
+        .to(
+          pre,
+          {
+            yPercent: -100,
+            duration: 0.65,
+            ease: "power3.inOut",
+            onComplete: () => pre.remove(),
+          },
+          "-=0.12",
+        );
     }
 
     return () => {

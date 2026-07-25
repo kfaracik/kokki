@@ -40,7 +40,7 @@ export default function Hero() {
         duration: reduced ? 0.5 : 1.1,
         stagger: reduced ? 0 : 0.12,
         ease: "power3.out",
-        delay: reduced ? 0.9 : 1.6,
+        delay: reduced ? 0.4 : 1.05,
       });
       if (reduced) return;
       gsap.to(".hero-content", {
