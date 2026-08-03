@@ -65,6 +65,44 @@ export function Reveal({ children }: { children: React.ReactNode }) {
   );
 }
 
+function useIgnition<T extends HTMLElement>(start = "top 92%") {
+  const ref = useRef<T>(null);
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+    const el = ref.current;
+    if (!el) return;
+    if (prefersReducedMotion()) {
+      el.classList.add("ignited");
+      return;
+    }
+    const st = ScrollTrigger.create({
+      trigger: el,
+      start,
+      end: "bottom top",
+      onEnter: () => el.classList.add("ignited"),
+      onEnterBack: () => el.classList.add("ignited"),
+      onLeave: () => el.classList.remove("ignited"),
+      onLeaveBack: () => el.classList.remove("ignited"),
+    });
+    return () => st.kill();
+  }, [start]);
+  return ref;
+}
+
+export function HeatLine({ position = "bottom" }: { position?: "top" | "bottom" }) {
+  const ref = useIgnition<HTMLSpanElement>();
+  return (
+    <span
+      className={`heatline${position === "top" ? " top" : ""}`}
+      ref={ref}
+      aria-hidden
+    >
+      <i className="hl-core" />
+      <i className="hl-comet" />
+    </span>
+  );
+}
+
 export function Invisible() {
   const photoRef = useRef<HTMLDivElement>(null);
   const [lit, setLit] = useState(false);
@@ -163,6 +201,7 @@ export function Panel() {
   const rotorRef = useRef<HTMLDivElement>(null);
   const glareRef = useRef<HTMLDivElement>(null);
   const glowRef = useRef<HTMLDivElement>(null);
+  const tiltRef = useIgnition<HTMLDivElement>("top 72%");
 
   useEffect(() => {
     const stage = stageRef.current;
@@ -241,7 +280,7 @@ export function Panel() {
             data-cursor
           >
             <div className="panel-glow" ref={glowRef} />
-            <div className="panel-tilt">
+            <div className="panel-tilt" ref={tiltRef}>
               <div className="panel-rotor" ref={rotorRef}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
@@ -334,6 +373,7 @@ export function Products({
                 <div className="visual">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={p.image} alt={p.name} loading="lazy" />
+                  <HeatLine />
                 </div>
                 <div className="card-body">
                   <span className="tag">{p.tag}</span>
@@ -458,12 +498,14 @@ export function Collab() {
               {COLLAB_CARDS.map((c, i) => (
                 <Reveal key={c.title}>
                   <div className="collab-card" data-cursor>
+                    <HeatLine position="top" />
                     <span className="collab-num">{String(i + 1).padStart(2, "0")}</span>
                     <div>
                       <h3>{c.title}</h3>
                       <p>{c.body}</p>
                     </div>
                     <span className="diamond" />
+                    {i === COLLAB_CARDS.length - 1 ? <HeatLine /> : null}
                   </div>
                 </Reveal>
               ))}
@@ -644,6 +686,7 @@ export function Contact() {
                 minLength={2}
               />
               <label htmlFor="f-name">Imię</label>
+              <i className="field-heat" aria-hidden />
             </div>
             <div className="field">
               <input
@@ -655,6 +698,7 @@ export function Contact() {
                 required
               />
               <label htmlFor="f-email">E-mail</label>
+              <i className="field-heat" aria-hidden />
             </div>
             <div className="field">
               <textarea
@@ -666,6 +710,7 @@ export function Contact() {
                 minLength={10}
               />
               <label htmlFor="f-msg">Twoja wiadomość</label>
+              <i className="field-heat" aria-hidden />
             </div>
             <div className="field hp" aria-hidden="true">
               <input
