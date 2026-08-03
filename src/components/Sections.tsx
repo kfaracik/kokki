@@ -305,7 +305,11 @@ function Counter({ to, suffix }: { to: number; suffix?: string }) {
   );
 }
 
-export function Products() {
+export function Products({
+  products = PRODUCTS,
+}: {
+  products?: typeof PRODUCTS;
+}) {
   return (
     <section className="pad" id="oferta" style={{ background: "var(--bg-2)" }}>
       <div className="wrap">
@@ -324,7 +328,7 @@ export function Products() {
           </div>
         </Reveal>
         <div className="products">
-          {PRODUCTS.map((p) => (
+          {products.map((p) => (
             <Reveal key={p.id}>
               <article className="card" data-cursor>
                 <div className="visual">
@@ -499,7 +503,7 @@ export function About() {
   );
 }
 
-export function Faq() {
+export function Faq({ items = FAQ }: { items?: typeof FAQ }) {
   const [open, setOpen] = useState<string | null>(null);
   const refs = useRef<Record<string, HTMLDivElement | null>>({});
 
@@ -514,7 +518,7 @@ export function Faq() {
         </Reveal>
         <Reveal>
           <div className="faq-list">
-            {FAQ.map((f) => {
+            {items.map((f) => {
               const isOpen = open === f.id;
               return (
                 <div className={`faq-item${isOpen ? " open" : ""}`} key={f.id}>

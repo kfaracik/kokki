@@ -12,8 +12,11 @@ import {
   Products,
   Ticker,
 } from "@/components/Sections";
+import { getFaq, getProducts } from "@/lib/api";
 
-export default function Home() {
+export default async function Home() {
+  const [products, faq] = await Promise.all([getProducts(), getFaq()]);
+
   return (
     <>
       <Header />
@@ -23,10 +26,10 @@ export default function Home() {
         <Ignite />
         <Invisible />
         <Panel />
-        <Products />
+        <Products products={products} />
         <Collab />
         <About />
-        <Faq />
+        <Faq items={faq} />
         <Contact />
       </main>
       <Footer />
