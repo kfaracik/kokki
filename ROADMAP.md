@@ -56,9 +56,10 @@ Docelowo spięta z backendem/adminem na wzór infrastruktury new-pawnshop (leady
 
 ## ⬜ Faza 6 — Integracja
 
-- [ ] Front: mocki z `data.ts` → API (ISR/revalidate)
-- [ ] Admin CRUD produktów/FAQ widoczny na stronie
-- [ ] E2E QA całości
+- [x] Front: mocki z `data.ts` → API (`lib/api.ts`, ISR revalidate 300 s, fallback na statyczne dane gdy brak `NEXT_PUBLIC_API_URL`/API padnie — produkcja bezpieczna do czasu deployu API)
+- [x] Admin CRUD produktów/FAQ widoczny na stronie — potwierdzone E2E lokalnie: PATCH taga w API → strona pokazała zmianę po oknie revalidate → revert
+- [x] E2E QA całości (lokalnie): formularz → API → panel; produkty/FAQ z bazy (11 rekordów w SSR); wyłapany i naprawiony bug backendu (partial PATCH zerował pola z defaultami — fix 218ccfb w kokki-backend)
+- [ ] E2E QA na produkcji — po deployu API i ustawieniu `NEXT_PUBLIC_API_URL` w Vercel
 
 ---
 
